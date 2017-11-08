@@ -2,8 +2,6 @@
 #include <sstream>
 #include <map>
 
-#define BUFF 128
-
 using namespace std;
 
 struct commit {
