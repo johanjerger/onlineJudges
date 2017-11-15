@@ -1,30 +1,28 @@
 #include <iostream>
-#include <sstream>
 
 using namespace std;
 
 int main()
 {
-  int diffs[3005], i, j;
-  string input, result;
+  int numbers, diffs[3005];
+  bool not_jolly;
 
-  while (getline(cin, input) && !input.empty()) {
-    i = 0;
-    stringstream numbers(input.c_str());
+  while (cin >> numbers) {
+      not_jolly = true;
+      cin >> diffs[0];
+      for (int i=1; i < numbers; i++) {
+        cin >> diffs[i];
+        diffs[i-1] = abs(diffs[i-1] - diffs[i]);
+      }
+      cin.ignore();
 
-    numbers >> diffs[i++];
-    while (numbers >> diffs[i]) {
-      diffs[i-1] = abs(diffs[i-1] - diffs[i]);
-      i++;
-    }
+      for (int i=0; i < numbers-1; i++) {
+        not_jolly &= (diffs[i] == 0 || diffs[i] >= numbers);
+        cout << diffs[i] << ' ';
+      }
 
-    for (j = 0; j < i-1; j++) {
-      if (diffs[j] > i-1 || diffs[j] == 0) break;
-    }
-
-    if (j == i) j--;
-    result = (diffs[j] > i-1 || diffs[j] == 0) ? "Not jolly" : "Jolly";
-    cout << result << endl;
+      string res = (not_jolly) ? "Not jolly" : "Jolly";
+      cout << res << endl;
   }
 
   return 0;
